@@ -4,20 +4,19 @@
        <el-col :xs="4" :sm="4" :md="4" :lg="4">
          <div class="photo-left">
             <img src="../assets/image/113_90.png" width="100%" height="auto" style="margin-left:10px" @click='toggleShow'>
-            <my-upload field="img"
-                    @crop-success="cropSuccess"
-                    @crop-upload-success="cropUploadSuccess"
-                    @crop-upload-fail="cropUploadFail"
-                    v-model="show"
-                :width="300"
-                :height="300"
-                url="http://101.198.151.190/api/crop.php"
-                :params="params"
-                :headers="headers"
-                img-format="png"></my-upload>
+<!--            <my-upload field="img"-->
+<!--                    @crop-success="cropSuccess"-->
+<!--                    @crop-upload-success="cropUploadSuccess"-->
+<!--                    @crop-upload-fail="cropUploadFail"-->
+<!--                    v-model="show"-->
+<!--                :width="300"-->
+<!--                :height="300"-->
+<!--                url="http://101.198.151.190/api/crop.php"-->
+<!--                :params="params"-->
+<!--                :headers="headers"-->
+<!--                img-format="png"/>-->
               <img :src="imgDataUrl">
             <p class="name">{{username}}</p>
-            
          </div>
        </el-col>
        <el-col :xs="20" :sm="20" :md="20" :lg="20" >
@@ -95,11 +94,11 @@
               <td>{{doctorInfo.intro}}</td>
             </tr>
           </table>
-        </div>          
+        </div>
        </el-col>
      </el-row>
      <div>
-      
+
     </div>
     <!-- 个人信息弹窗 -->
     <el-dialog title="编辑个人信息" :visible.sync="dialogFormVisible">
@@ -110,7 +109,7 @@
             <el-form-item label="所属科室">
               <el-select v-model="personalInfo.department" placeholder="请选择活动区域">
               <el-option label="内科" value="内科" ></el-option>
-              <el-option label="儿科" value="儿科" ></el-option>              
+              <el-option label="儿科" value="儿科" ></el-option>
               <el-option label="妇科" value="妇科" ></el-option>
               <el-option label="眼科" value="眼科" ></el-option>
               <el-option label="神经外科" value="神经外科" ></el-option>
@@ -129,7 +128,7 @@
            <el-form-item label="生日日期">
                  <el-date-picker type="date" placeholder="选择日期" v-model="personalInfo.birthday" style="width: 100%;" @change="ChangeBirthday()"></el-date-picker>
            </el-form-item>
-           
+
            <el-form-item label="电话">
              <el-input v-model="personalInfo.phone"></el-input>
            </el-form-item>
@@ -145,7 +144,7 @@
 
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-           
+
             <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
           </div>
     </el-dialog>
@@ -170,7 +169,7 @@
 
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible2 = false">取 消</el-button>
-           
+
             <el-button type="primary" @click="dialogFormVisible2 = false">确 定</el-button>
           </div>
     </el-dialog>
@@ -185,7 +184,7 @@
               <el-form-item label="挂号类型">
                 <el-select v-model="doctorInfo.type" placeholder="请选择活动区域">
                 <el-option label="普通挂号" value="普通挂号" ></el-option>
-                <el-option label="VIP挂号" value="VIP挂号" ></el-option>              
+                <el-option label="VIP挂号" value="VIP挂号" ></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="擅长疾病">
@@ -199,7 +198,7 @@
 
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible3 = false">取 消</el-button>
-           
+
             <el-button type="primary" @click="dialogFormVisible3 = false">确 定</el-button>
           </div>
     </el-dialog>
@@ -254,7 +253,7 @@ import myUpload from 'vue-image-crop-upload/upload-2.vue';
                 department:"",
                 goodat:"",
                 intro:""
-              } 
+              }
       }
     },
     methods:{
@@ -304,8 +303,8 @@ import myUpload from 'vue-image-crop-upload/upload-2.vue';
       toggleShow() {
         this.show = !this.show;
       },
-      computeYear(){         
-          var returnAge;  
+      computeYear(){
+          var returnAge;
           var birth=this.personalInfo.birthday;
           console.log('=======111',birth);
           if( birth && birth.toString().indexOf('-') === -1 ){
@@ -315,68 +314,68 @@ import myUpload from 'vue-image-crop-upload/upload-2.vue';
           }
           // Wed Aug 16 1978 00:00:00 GMT+0800 (中国标准时间)没办法进行切割
           // 需要转出2017-8-3
-          var strBirthdayArr=birth.toString().split("-"); 
-          var birthYear = strBirthdayArr[0];  
-          var birthMonth = strBirthdayArr[1];  
-          var birthDay = strBirthdayArr[2];  
-            
-          var d = new Date();  
-          var nowYear = d.getFullYear();  
-          var nowMonth = d.getMonth() + 1;  
-          var nowDay = d.getDate();  
-            
-          if(nowYear == birthYear){  
-              returnAge = 0;//同年 则为0岁  
-          }  
-          else{  
-              var ageDiff = nowYear - birthYear ; //年之差  
-              if(ageDiff > 0){  
-                  if(nowMonth == birthMonth) {  
-                      var dayDiff = nowDay - birthDay;//日之差  
-                      if(dayDiff < 0)  
-                      {  
-                          returnAge = ageDiff - 1;  
-                      }  
-                      else  
-                      {  
-                          returnAge = ageDiff ;  
-                      }  
-                  }  
-                  else  
-                  {  
-                      var monthDiff = nowMonth - birthMonth;//月之差  
-                      if(monthDiff < 0)  
-                      {  
-                          returnAge = ageDiff - 1;  
-                      }  
-                      else  
-                      {  
-                          returnAge = ageDiff ;  
-                      }  
-                  }  
-              }  
-              else  
-              {  
-                  returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天  
-              }  
-          }  
-            
-          // this.yearOld=returnAge;//返回周岁年龄 
-          return returnAge;  
+          var strBirthdayArr=birth.toString().split("-");
+          var birthYear = strBirthdayArr[0];
+          var birthMonth = strBirthdayArr[1];
+          var birthDay = strBirthdayArr[2];
+
+          var d = new Date();
+          var nowYear = d.getFullYear();
+          var nowMonth = d.getMonth() + 1;
+          var nowDay = d.getDate();
+
+          if(nowYear == birthYear){
+              returnAge = 0;//同年 则为0岁
+          }
+          else{
+              var ageDiff = nowYear - birthYear ; //年之差
+              if(ageDiff > 0){
+                  if(nowMonth == birthMonth) {
+                      var dayDiff = nowDay - birthDay;//日之差
+                      if(dayDiff < 0)
+                      {
+                          returnAge = ageDiff - 1;
+                      }
+                      else
+                      {
+                          returnAge = ageDiff ;
+                      }
+                  }
+                  else
+                  {
+                      var monthDiff = nowMonth - birthMonth;//月之差
+                      if(monthDiff < 0)
+                      {
+                          returnAge = ageDiff - 1;
+                      }
+                      else
+                      {
+                          returnAge = ageDiff ;
+                      }
+                  }
+              }
+              else
+              {
+                  returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天
+              }
+          }
+
+          // this.yearOld=returnAge;//返回周岁年龄
+          return returnAge;
 
       }
 
 
-      
-      
+
+
     },
     mounted(){
-      
+
       this.getData();
       this.ChangeEmail();
       this.getLoginData();
       // this.ChangeBirthday();
-      
+
     },
     events: {
       /**
